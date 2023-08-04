@@ -8,9 +8,11 @@ print("This script will scrape data from jalgpall.ee for all players with ID bet
 
 start_id = input("Enter the starting player ID: ")
 
-with open('player_data.csv', 'w', newline='') as file:
+with open('player_data.csv', 'a', newline='') as file:
     writer = csv.writer(file)
-    writer.writerow(["Player ID", "Name", "Total minutes played", "Birthday", "Team", "Nationality", "Total games", "Season"])
+    # Check if the file is empty (i.e., if we're at the start of the file)
+    if file.tell() == 0:
+        writer.writerow(["Player ID", "Name", "Total minutes played", "Birthday", "Team", "Nationality", "Total games", "Season"])
 
     for player_id in range(int(start_id), int(start_id) + 500):
         print(f"Looking for player with ID: {player_id}")
