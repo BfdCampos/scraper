@@ -4,9 +4,10 @@ import csv
 import time
 
 # Latest player ID 2509
-print("This script will scrape data from jalgpall.ee for all players with ID between the starting player ID + 500.")
+print("This script will scrape data from jalgpall.ee for all players with ID between the starting player ID to 100,000 with a break!")
 
 start_id = input("Enter the starting player ID: ")
+continue_id = int(start_id)
 
 with open('player_data.csv', 'a', newline='') as file:
     writer = csv.writer(file)
@@ -14,7 +15,7 @@ with open('player_data.csv', 'a', newline='') as file:
     if file.tell() == 0:
         writer.writerow(["Player ID", "Name", "Total minutes played", "Birthday", "Team", "Nationality", "Total games", "Season"])
 
-    for player_id in range(int(start_id), int(start_id) + 500):
+    for player_id in range(continue_id, 100000):
         print(f"Looking for player with ID: {player_id}")
         url = f"https://jalgpall.ee/voistlused/player/{player_id}/"
         response = requests.get(url)
@@ -40,4 +41,10 @@ with open('player_data.csv', 'a', newline='') as file:
             print(f"No data found for player with ID: {player_id}")
             continue
         time.sleep(0.01)
+        if continue_id == int(start_id) + 500:
+            print("Taking a break for 5 minutes!")
+            time.sleep(300)
+
+        else:
+            continue
 
